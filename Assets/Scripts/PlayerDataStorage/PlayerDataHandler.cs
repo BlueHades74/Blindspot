@@ -24,6 +24,20 @@ public class PlayerDataHandler : NetworkBehaviour
 {
     private Dictionary<ulong, PlayerData> dataStorage = new Dictionary<ulong, PlayerData>();
 
+    private void Awake()
+    {
+        /*
+        //Verify that this is a singleton
+        if (FindAnyObjectByType<PlayerDataHandler>())
+        {
+            Destroy(gameObject);
+        }
+
+        //Set Don't Destroy On Load
+        DontDestroyOnLoad(gameObject);
+        */
+    }
+
     public override void OnNetworkSpawn()
     {
         if (IsClient)
