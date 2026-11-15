@@ -12,7 +12,7 @@ public class Look : MonoBehaviour
     private void Start()
     {
         // lock mouse to center of screen and make it disappear
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnLook(InputAction.CallbackContext context)
