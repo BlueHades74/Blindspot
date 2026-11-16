@@ -8,6 +8,7 @@ using System;
 
 public class ConnectionManager : MonoBehaviour
 {
+    public static event Action<string> announceMessage;
     public static ConnectionManager singletonInstance { get; private set; }
 
     private bool isBusy = false;
@@ -42,6 +43,7 @@ public class ConnectionManager : MonoBehaviour
 
         try
         {
+            announceMessage.Invoke("Connecting...");
             await InitializeUnityServices();
 
             
@@ -49,6 +51,7 @@ public class ConnectionManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("Host failed in Connection Manager. Message: " + e.Message);
+            announceMessage.Invoke("Host Failed");
         }
         finally
         {
@@ -72,6 +75,7 @@ public class ConnectionManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("Initialization Failed in Connection Manager. Message: " + e.Message);
+            announceMessage.Invoke("Initialize Failed");
 
             throw;
         }

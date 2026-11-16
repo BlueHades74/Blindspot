@@ -16,17 +16,26 @@ public class UIReader : MonoBehaviour
     {
         usernameInputField.onValueChanged.AddListener(InputFieldsUpdated);
         joinCodeInputField.onValueChanged.AddListener(InputFieldsUpdated);
+
+        ConnectionManager.announceMessage += AcceptMessage;
     }
 
     private void OnDisable()
     {
         usernameInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
         usernameInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
+
+        ConnectionManager.announceMessage -= AcceptMessage;
     }
 
     private void Start()
     {
         UpdateButtons();
+    }
+
+    private void AcceptMessage(string message)
+    {
+        GetComponent<SpawnChatMessage>().SendMessage(message);
     }
 
     private void InputFieldsUpdated(string val)
