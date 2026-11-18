@@ -3134,8 +3134,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 728883438}
   m_HandleRect: {fileID: 728883437}
   m_Direction: 2
-  m_Value: -0.000003872161
-  m_Size: 0.45815557
+  m_Value: 0
+  m_Size: 0.45796728
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4163,7 +4163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 118.21965}
+  m_AnchoredPosition: {x: 0, y: 118.21922}
   m_SizeDelta: {x: 0, y: 218.2192}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &999296839
@@ -4731,7 +4731,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1193607940}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 736526130}
+        m_TargetAssemblyTypeName: ConnectionManager, Assembly-CSharp
+        m_MethodName: Host
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1193607940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7058,7 +7070,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1951564907}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 736526130}
+        m_TargetAssemblyTypeName: ConnectionManager, Assembly-CSharp
+        m_MethodName: Join
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1951564907
 MonoBehaviour:
   m_ObjectHideFlags: 0
