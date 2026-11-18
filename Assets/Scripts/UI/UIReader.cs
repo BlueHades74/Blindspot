@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class UIReader : MonoBehaviour
 {
+    public static event System.Action<GameObject> AnnounceExistence;
+
     [Header("InputFields")]
     [SerializeField] TMP_InputField usernameInputField;
     [SerializeField] TMP_InputField joinCodeInputField;
@@ -23,7 +25,7 @@ public class UIReader : MonoBehaviour
     private void OnDisable()
     {
         usernameInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
-        usernameInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
+        joinCodeInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
 
         ConnectionManager.announceMessage -= AcceptMessage;
     }
@@ -31,11 +33,12 @@ public class UIReader : MonoBehaviour
     private void Start()
     {
         UpdateButtons();
+        AnnounceExistence.Invoke(gameObject);
     }
 
     private void AcceptMessage(string message)
     {
-        GetComponent<SpawnChatMessage>().SendMessage(message);
+        GetComponent<SpawnChatMessage>().AnnounceMessage(message);
     }
 
     private void InputFieldsUpdated(string val)
@@ -62,5 +65,10 @@ public class UIReader : MonoBehaviour
         if (string.IsNullOrWhiteSpace(inputField.text)) return false;
 
         return true;
+    }
+
+    public string ReturnJoinField()
+    {
+        return joinCodeInputField.text;
     }
 }

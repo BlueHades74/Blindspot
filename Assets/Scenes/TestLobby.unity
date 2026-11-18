@@ -3134,8 +3134,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 728883438}
   m_HandleRect: {fileID: 728883437}
   m_Direction: 2
-  m_Value: -0.0000034204088
-  m_Size: 0.4582283
+  m_Value: -0.000003872161
+  m_Size: 0.45815557
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3506,6 +3506,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 736526129}
+  - component: {fileID: 736526130}
   m_Layer: 0
   m_Name: ConnectionManager
   m_TagString: Untagged
@@ -3528,6 +3529,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &736526130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736526128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e744f39e89bc1d49b1f6df90813e6be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConnectionManager
 --- !u!1 &822145277
 GameObject:
   m_ObjectHideFlags: 0
@@ -4150,7 +4163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 118.21962}
+  m_AnchoredPosition: {x: 0, y: 118.21965}
   m_SizeDelta: {x: 0, y: 218.2192}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &999296839
@@ -6259,7 +6272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1733774861
 MonoBehaviour:
   m_ObjectHideFlags: 0

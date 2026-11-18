@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BrianWorkRoom.unity
     guid: f94f49453faf08746a5fdf35b396eb58
+  - enabled: 1
+    path: Assets/Scenes/TestLobby.unity
+    guid: aeb59a3261b3dd7478b5b089ec83d8df
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
