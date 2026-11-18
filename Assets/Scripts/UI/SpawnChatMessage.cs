@@ -42,7 +42,7 @@ public class SpawnChatMessage : MonoBehaviour
      * 
      */
 
-    private void AnnounceMessage(string message)
+    public void AnnounceMessage(string message)
     {
         GameObject createdMessage = Instantiate(messagePrefab, chatField.transform);
         if (!createdMessage.transform.GetChild(0).TryGetComponent(out TextMeshProUGUI txt)) return;
