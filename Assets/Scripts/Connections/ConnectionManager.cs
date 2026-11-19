@@ -11,7 +11,6 @@ using Unity.Netcode.Transports.UTP;
 public class ConnectionManager : MonoBehaviour
 {
     public static event Action<string> announceMessage;
-    public static event Action RequestJoinCode;
     public static ConnectionManager singletonInstance { get; private set; }
 
     private bool isBusy = false;

@@ -22,6 +22,9 @@ struct PlayerData
 
 public class PlayerDataHandler : NetworkBehaviour
 {
+    //public static event System.Action<PlayerData> OnPlayerData;
+    public static event System.Action AnnouncePlayerEntry;
+
     private Dictionary<ulong, PlayerData> dataStorage = new Dictionary<ulong, PlayerData>();
 
     private void Awake()
@@ -46,7 +49,7 @@ public class PlayerDataHandler : NetworkBehaviour
         }
 
         if (IsServer) NetworkManager.OnClientDisconnectCallback += OnClientDisconnect;
-        
+
         base.OnNetworkSpawn();
     }
 
@@ -92,5 +95,11 @@ public class PlayerDataHandler : NetworkBehaviour
 
         PlayerData generatedData = new PlayerData(username);
         dataStorage.Add(clientID, generatedData);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void NewPlayerJoinRpc()
+    {
+        AnnouncePlayerEntry.Invoke();
     }
 }

@@ -6,13 +6,27 @@ public class UIReader : MonoBehaviour
 {
     public static event System.Action<GameObject> AnnounceExistence;
 
+    [Header("Username Screen")]
+
     [Header("InputFields")]
-    [SerializeField] TMP_InputField usernameInputField;
-    [SerializeField] TMP_InputField joinCodeInputField;
+    [SerializeField] private TMP_InputField usernameInputField;
+    [SerializeField] private TMP_InputField joinCodeInputField;
 
     [Header("Buttons")]
-    [SerializeField] Button[] onlyUsernameBtns;
-    [SerializeField] Button[] bothFieldBtns;
+    [SerializeField] private Button[] onlyUsernameBtns;
+    [SerializeField] private Button[] bothFieldBtns;
+
+    [Header("----------------------------------------------------")]
+
+    [Header("Player List Screen")]
+
+    [Header("GameObjects")]
+    [SerializeField] private GameObject playerListParent;
+    [SerializeField] private GameObject statlineContainer;
+
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject statlinePrefab;
 
     private void OnEnable()
     {
@@ -20,6 +34,7 @@ public class UIReader : MonoBehaviour
         joinCodeInputField.onValueChanged.AddListener(InputFieldsUpdated);
 
         ConnectionManager.announceMessage += AcceptMessage;
+        PlayerDataHandler.AnnouncePlayerEntry += AddStatline;
     }
 
     private void OnDisable()
@@ -28,6 +43,7 @@ public class UIReader : MonoBehaviour
         joinCodeInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
 
         ConnectionManager.announceMessage -= AcceptMessage;
+        PlayerDataHandler.AnnouncePlayerEntry -= AddStatline;
     }
 
     private void Start()
@@ -65,6 +81,11 @@ public class UIReader : MonoBehaviour
         if (string.IsNullOrWhiteSpace(inputField.text)) return false;
 
         return true;
+    }
+
+    private void AddStatline()
+    {
+
     }
 
     public string ReturnJoinField()
