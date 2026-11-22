@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 666517350
+  GlobalObjectIdHash: 1147478329
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -641,7 +641,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b86c856c2a0c147b735e0f6a1ecc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
+  ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 2
+  playerCam: {fileID: 1070619547094400845}
 --- !u!114 &4136278388279414693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,6 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecd90c7ce5871443bcd9dd9a3191517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBulletMovement
+  ShowTopMostFoldoutHeaderGroup: 1
   bulletPrefab: {fileID: 3584506235833321038, guid: 2ab1edb4d1988a94a9aee85b8beee98e, type: 3}
   firePoint: {fileID: 830569095052347329}
   bulletSpeed: 50
@@ -670,6 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087bfca72bc67424e9b339d9c9edb289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnOnOffFlashlight
+  ShowTopMostFoldoutHeaderGroup: 1
   light: {fileID: 2168751860414854413}
 --- !u!1 &5776679966508761752
 GameObject:
@@ -836,7 +840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8277324273832493688
 Transform:
   m_ObjectHideFlags: 0
@@ -867,7 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
-    Enabled: 0
+    Enabled: 1
     m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
@@ -928,6 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb83f29ce8a0a11469187e0f8f411b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Look
+  ShowTopMostFoldoutHeaderGroup: 1
   mouseSensitivity: 12
   playerBody: {fileID: 3571499010981325180}
 --- !u!1 &7350971373423909515
@@ -1230,6 +1235,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5213749714610585293}
     m_Modifications:
+    - target: {fileID: -5580865379838102313, guid: afebf8e441fd8974e9ec294f2b1af3f3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1627563319
+      objectReference: {fileID: 0}
     - target: {fileID: 386509911069993394, guid: afebf8e441fd8974e9ec294f2b1af3f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

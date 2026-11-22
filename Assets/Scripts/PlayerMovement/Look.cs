@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Look : MonoBehaviour
+public class Look : NetworkBehaviour
 {
     [SerializeField] private float mouseSensitivity = 12f;
     [SerializeField] private Transform playerBody;
@@ -17,11 +18,13 @@ public class Look : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
+        if (!IsOwner) return;
         lookInput += context.ReadValue<Vector2>();
     }
 
     private void LateUpdate()
     {
+        if (!IsOwner) return;
         float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
 

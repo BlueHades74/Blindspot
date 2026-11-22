@@ -418,6 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4292d7c99c14a249913b6c5e6e1ef8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManagerUI
+  ShowTopMostFoldoutHeaderGroup: 1
   hostBtn: {fileID: 1418036041}
   clientBtn: {fileID: 1608079582}
   canvas: {fileID: 1909852488}

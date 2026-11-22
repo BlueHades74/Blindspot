@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerBulletMovement : MonoBehaviour
+public class PlayerBulletMovement : NetworkBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
@@ -10,12 +11,15 @@ public class PlayerBulletMovement : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (context.started) ShootBullet();
+        if (!IsOwner) return;
+        if (context.started) ShootBulletServerRpc();
     }
 
-    private void ShootBullet()
+    [ServerRpc]
+    private void ShootBulletServerRpc()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<NetworkObject>().Spawn(true);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
