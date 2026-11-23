@@ -7,24 +7,25 @@ public class PlayerBulletMovement : NetworkBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float bulletSpeed = 10f;
-    [SerializeField] private float bulletLifetime = 3f;
 
     public void OnShoot(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
-        if (context.started) ShootBulletServerRpc();
+        if (context.started) ShootBulletServerRpc(firePoint.position, firePoint.rotation);
     }
 
     [ServerRpc]
-    private void ShootBulletServerRpc()
+    private void ShootBulletServerRpc(Vector3 spawnPos, Quaternion spawnRot)
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<NetworkObject>().Spawn(true);
+        GameObject bullet = Instantiate(bulletPrefab, spawnPos, spawnRot);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         if (rb != null) rb.linearVelocity = firePoint.forward * bulletSpeed;
 
-        Destroy(bullet, bulletLifetime);
+        bullet.GetComponent<NetworkObject>().Spawn(true);
+
+        // old destroy code, only need server to destroy
+        //Destroy(bullet, bulletLifetime);
     }
 }

@@ -22,7 +22,7 @@ public class Look : NetworkBehaviour
         lookInput += context.ReadValue<Vector2>();
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (!IsOwner) return;
         float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;

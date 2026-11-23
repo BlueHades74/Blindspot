@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4081550876362788094}
   - component: {fileID: 4193335991123058224}
   - component: {fileID: -1688546779090830936}
+  - component: {fileID: -5536504899159666486}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -231,5 +232,19 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkRigidbodyBaseExpanded: 0
   UseRigidBodyForMotion: 0
-  AutoUpdateKinematicState: 1
+  AutoUpdateKinematicState: 0
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &-5536504899159666486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3584506235833321038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ade5faf46c16ec45a38d9ae67a90bfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoDestroy
+  ShowTopMostFoldoutHeaderGroup: 1
+  timeToDestroy: 2

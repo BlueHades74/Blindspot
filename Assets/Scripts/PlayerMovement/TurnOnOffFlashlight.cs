@@ -5,19 +5,21 @@ using UnityEngine.InputSystem;
 public class TurnOnOffFlashlight : NetworkBehaviour
 {
     [SerializeField] GameObject light;
-    private bool lightOn = true;
+    private NetworkVariable<bool> lightOn = new NetworkVariable<bool>(true);
 
     public void OnToggleFlashlight(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
 
-        if (context.performed && lightOn)
+        if (context.performed && lightOn.Value)
         {
             ToggleFlashlightServerRpc(true);
+            light.SetActive(false);
         }
         else if (context.performed)
         {
             ToggleFlashlightServerRpc(false);
+            light.SetActive(true);
         }
     }
 
@@ -27,12 +29,12 @@ public class TurnOnOffFlashlight : NetworkBehaviour
         if (alreadyOn)
         {
             light.SetActive(false);
-            lightOn = false;
+            lightOn.Value = false;
         }
         else
         {
             light.SetActive(true);
-            lightOn = true;
+            lightOn.Value = true;
         }
     }
 }
