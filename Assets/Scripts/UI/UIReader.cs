@@ -7,6 +7,7 @@ public class UIReader : MonoBehaviour
     public static event System.Action<GameObject> AnnounceExistence;
 
     [Header("Username Screen")]
+    [SerializeField] private GameObject userScreenParent;
 
     [Header("InputFields")]
     [SerializeField] private TMP_InputField usernameInputField;
@@ -23,6 +24,7 @@ public class UIReader : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private GameObject playerListParent;
     [SerializeField] private GameObject statlineContainer;
+    [SerializeField] private TextMeshProUGUI joinCode;
 
 
     [Header("Prefabs")]
@@ -34,6 +36,8 @@ public class UIReader : MonoBehaviour
         joinCodeInputField.onValueChanged.AddListener(InputFieldsUpdated);
 
         ConnectionManager.announceMessage += AcceptMessage;
+        ConnectionManager.AnnounceConnection += SwitchToRoom;
+
         PlayerDataHandler.AnnouncePlayerEntry += AddStatline;
     }
 
@@ -43,6 +47,8 @@ public class UIReader : MonoBehaviour
         joinCodeInputField.onValueChanged.RemoveListener(InputFieldsUpdated);
 
         ConnectionManager.announceMessage -= AcceptMessage;
+        ConnectionManager.AnnounceConnection -= SwitchToRoom;
+
         PlayerDataHandler.AnnouncePlayerEntry -= AddStatline;
     }
 
@@ -86,6 +92,14 @@ public class UIReader : MonoBehaviour
     private void AddStatline()
     {
 
+    }
+
+    private void SwitchToRoom(string text)
+    {
+        userScreenParent.SetActive(false);
+        playerListParent.SetActive(true);
+        
+        joinCode.text = text;
     }
 
     public string ReturnJoinField()

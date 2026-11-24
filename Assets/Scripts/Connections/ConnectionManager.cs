@@ -11,6 +11,8 @@ using Unity.Netcode.Transports.UTP;
 public class ConnectionManager : MonoBehaviour
 {
     public static event Action<string> announceMessage;
+    public static event Action<string> AnnounceConnection;
+
     public static ConnectionManager singletonInstance { get; private set; }
 
     private bool isBusy = false;
@@ -66,7 +68,8 @@ public class ConnectionManager : MonoBehaviour
 
             if (NetworkManager.Singleton.StartHost())
             {
-
+                announceMessage.Invoke("Connected!");
+                AnnounceConnection.Invoke(joinCode);
             }
             else
             {
@@ -102,7 +105,8 @@ public class ConnectionManager : MonoBehaviour
 
             if (NetworkManager.Singleton.StartClient())
             {
-
+                announceMessage.Invoke("Connected!");
+                AnnounceConnection.Invoke(joinCode);
             }
             else
             {
