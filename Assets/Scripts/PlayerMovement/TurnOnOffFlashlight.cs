@@ -1,22 +1,40 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TurnOnOffFlashlight : MonoBehaviour
+public class TurnOnOffFlashlight : NetworkBehaviour
 {
     [SerializeField] GameObject light;
-    private bool lightOn = true;
+    private NetworkVariable<bool> lightOn = new NetworkVariable<bool>(true);
 
     public void OnToggleFlashlight(InputAction.CallbackContext context)
     {
-        if (context.performed && lightOn)
+        if (!IsOwner) return;
+
+        if (context.performed && lightOn.Value)
         {
+            ToggleFlashlightServerRpc(true);
             light.SetActive(false);
-            lightOn = false;
         }
         else if (context.performed)
         {
+            ToggleFlashlightServerRpc(false);
             light.SetActive(true);
-            lightOn = true;
+        }
+    }
+
+    [ServerRpc]
+    private void ToggleFlashlightServerRpc(bool alreadyOn)
+    {
+        if (alreadyOn)
+        {
+            light.SetActive(false);
+            lightOn.Value = false;
+        }
+        else
+        {
+            light.SetActive(true);
+            lightOn.Value = true;
         }
     }
 }

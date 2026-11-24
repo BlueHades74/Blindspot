@@ -1,26 +1,31 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerBulletMovement : MonoBehaviour
+public class PlayerBulletMovement : NetworkBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float bulletSpeed = 10f;
-    [SerializeField] private float bulletLifetime = 3f;
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (context.started) ShootBullet();
+        if (!IsOwner) return;
+        if (context.started) ShootBulletServerRpc(firePoint.position, firePoint.rotation);
     }
 
-    private void ShootBullet()
+    [ServerRpc]
+    private void ShootBulletServerRpc(Vector3 spawnPos, Quaternion spawnRot)
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, spawnPos, spawnRot);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         if (rb != null) rb.linearVelocity = firePoint.forward * bulletSpeed;
 
-        Destroy(bullet, bulletLifetime);
+        bullet.GetComponent<NetworkObject>().Spawn(true);
+
+        // old destroy code, only need server to destroy
+        //Destroy(bullet, bulletLifetime);
     }
 }
