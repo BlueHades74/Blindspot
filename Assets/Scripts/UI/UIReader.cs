@@ -91,7 +91,7 @@ public class UIReader : MonoBehaviour
 
     private void AddStatline()
     {
-
+        Instantiate(statlinePrefab, statlineContainer.transform);
     }
 
     private void SwitchToRoom(string text)

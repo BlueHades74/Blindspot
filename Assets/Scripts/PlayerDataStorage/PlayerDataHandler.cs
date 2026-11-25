@@ -45,8 +45,11 @@ public class PlayerDataHandler : NetworkBehaviour
     {
         if (IsClient)
         {
+            ImportDictionaryRpc();
+            AnnounceDictionary();
             FindClientRequestedUser();
         }
+        Debug.Log("DATA IS GOING");
 
         if (IsServer) NetworkManager.OnClientDisconnectCallback += OnClientDisconnect;
 
@@ -82,6 +85,15 @@ public class PlayerDataHandler : NetworkBehaviour
 
     }
 
+    private void AnnounceDictionary()
+    {
+        if (dataStorage.Count == 0) return;
+
+        for (int i = 0; i < dataStorage.Count; i++)
+        {
+            AnnouncePlayerEntry.Invoke();
+        }
+    }
 
     //RPCs 
     [Rpc(SendTo.Server)]
@@ -95,10 +107,29 @@ public class PlayerDataHandler : NetworkBehaviour
 
         PlayerData generatedData = new PlayerData(username);
         dataStorage.Add(clientID, generatedData);
+
+        NewPlayerJoinRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    private void ImportDictionaryRpc(RpcParams rpcParams = default)
+    {
+        if (dataStorage.Count == 0) return;
+
+        for (int i = 0; i < dataStorage.Count; i++)
+        {
+            GenerateListRpc();
+        }
     }
 
     [Rpc(SendTo.Everyone)]
     private void NewPlayerJoinRpc()
+    {
+        AnnouncePlayerEntry.Invoke();
+    }
+
+    [Rpc(SendTo.Owner)]
+    private void GenerateListRpc()
     {
         AnnouncePlayerEntry.Invoke();
     }
