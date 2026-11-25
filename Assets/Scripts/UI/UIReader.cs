@@ -89,9 +89,10 @@ public class UIReader : MonoBehaviour
         return true;
     }
 
-    private void AddStatline()
+    private void AddStatline(string data)
     {
-        Instantiate(statlinePrefab, statlineContainer.transform);
+        GameObject display = Instantiate(statlinePrefab, statlineContainer.transform);
+        display.GetComponent<PlayerStatsDisplay>().SetName(data);
     }
 
     private void SwitchToRoom(string text)
@@ -100,6 +101,11 @@ public class UIReader : MonoBehaviour
         playerListParent.SetActive(true);
         
         joinCode.text = text;
+    }
+
+    public string ReturnNameField()
+    {
+        return usernameInputField.text;
     }
 
     public string ReturnJoinField()

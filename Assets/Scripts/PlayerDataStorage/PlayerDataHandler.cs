@@ -1,31 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-
-struct PlayerData
-{
-    public string username;
-
-    //Data
-    public int gamesWon;
-    public int infectedKills;
-    public int playersInfected;
-
-    public PlayerData(string name)
-    {
-        username = name;
-        gamesWon = 0;
-        infectedKills = 0;
-        playersInfected = 0;
-    }
-}
+using static UnityEngine.Audio.GeneratorInstance;
 
 public class PlayerDataHandler : NetworkBehaviour
 {
     //public static event System.Action<PlayerData> OnPlayerData;
-    public static event System.Action AnnouncePlayerEntry;
+    public static event System.Action<string> AnnouncePlayerEntry;
 
     private Dictionary<ulong, PlayerData> dataStorage = new Dictionary<ulong, PlayerData>();
+
+    private GameObject userInterfaceReader;
 
     private void Awake()
     {
@@ -41,12 +26,21 @@ public class PlayerDataHandler : NetworkBehaviour
         */
     }
 
+    private void OnEnable()
+    {
+        UIReader.AnnounceExistence += GetUI;
+    }
+
+    private void OnDisable()
+    {
+        UIReader.AnnounceExistence -= GetUI;
+    }
+
     public override void OnNetworkSpawn()
     {
         if (IsClient)
         {
             ImportDictionaryRpc();
-            AnnounceDictionary();
             FindClientRequestedUser();
         }
         Debug.Log("DATA IS GOING");
@@ -66,7 +60,7 @@ public class PlayerDataHandler : NetworkBehaviour
     private void FindClientRequestedUser()
     {
         //Retrieve Username From Input Field
-        string username = "";
+        string username = userInterfaceReader.GetComponent<UIReader>().ReturnNameField();
 
         //Send to Rpc
         GeneratePlayerDataRpc(username);
@@ -85,14 +79,9 @@ public class PlayerDataHandler : NetworkBehaviour
 
     }
 
-    private void AnnounceDictionary()
+    private void GetUI(GameObject UI)
     {
-        if (dataStorage.Count == 0) return;
-
-        for (int i = 0; i < dataStorage.Count; i++)
-        {
-            AnnouncePlayerEntry.Invoke();
-        }
+        userInterfaceReader = UI;
     }
 
     //RPCs 
@@ -108,7 +97,7 @@ public class PlayerDataHandler : NetworkBehaviour
         PlayerData generatedData = new PlayerData(username);
         dataStorage.Add(clientID, generatedData);
 
-        NewPlayerJoinRpc();
+        NewPlayerJoinRpc(generatedData.ReturnName());
     }
 
     [Rpc(SendTo.Server)]
@@ -116,21 +105,21 @@ public class PlayerDataHandler : NetworkBehaviour
     {
         if (dataStorage.Count == 0) return;
 
-        for (int i = 0; i < dataStorage.Count; i++)
+        foreach (PlayerData data in dataStorage.Values)
         {
-            GenerateListRpc();
+            GenerateListRpc(data.ReturnName(), RpcTarget.Single(rpcParams.Receive.SenderClientId, RpcTargetUse.Temp));
         }
     }
 
     [Rpc(SendTo.Everyone)]
-    private void NewPlayerJoinRpc()
+    private void NewPlayerJoinRpc(string data, RpcParams rpcParams = default)
     {
-        AnnouncePlayerEntry.Invoke();
+        AnnouncePlayerEntry.Invoke(data);
     }
 
-    [Rpc(SendTo.Owner)]
-    private void GenerateListRpc()
+    [Rpc(SendTo.SpecifiedInParams)]
+    private void GenerateListRpc(string data, RpcParams rpcParams = default)
     {
-        AnnouncePlayerEntry.Invoke();
+        AnnouncePlayerEntry.Invoke(data);
     }
 }
