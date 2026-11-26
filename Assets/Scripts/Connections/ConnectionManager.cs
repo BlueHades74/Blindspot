@@ -155,7 +155,7 @@ public class ConnectionManager : MonoBehaviour
         if (clientId != NetworkManager.Singleton.LocalClientId && !NetworkManager.Singleton.IsServer) ClearConnection();
     }
 
-    private void ClearConnection()
+    public void ClearConnection()
     {
         if (NetworkManager.Singleton.IsListening) NetworkManager.Singleton.Shutdown();
     }

@@ -89,10 +89,10 @@ public class UIReader : MonoBehaviour
         return true;
     }
 
-    private void AddStatline(string data)
+    private void AddStatline(ulong id, PlayerData data)
     {
         GameObject display = Instantiate(statlinePrefab, statlineContainer.transform);
-        display.GetComponent<PlayerStatsDisplay>().SetName(data);
+        display.GetComponent<PlayerStatsDisplay>().SetStats(id, data);
     }
 
     private void SwitchToRoom(string text)

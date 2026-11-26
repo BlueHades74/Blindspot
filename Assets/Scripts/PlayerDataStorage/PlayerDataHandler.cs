@@ -6,7 +6,8 @@ using static UnityEngine.Audio.GeneratorInstance;
 public class PlayerDataHandler : NetworkBehaviour
 {
     //public static event System.Action<PlayerData> OnPlayerData;
-    public static event System.Action<string> AnnouncePlayerEntry;
+    public static event System.Action<ulong, PlayerData> AnnouncePlayerEntry;
+    public static event System.Action<ulong> AnnouncePlayerLeave;
 
     private Dictionary<ulong, PlayerData> dataStorage = new Dictionary<ulong, PlayerData>();
 
@@ -68,11 +69,13 @@ public class PlayerDataHandler : NetworkBehaviour
 
     private void OnClientDisconnect(ulong clientID)
     {
+        Debug.Log("Enter");
         //Null check
         if (!dataStorage.ContainsKey(clientID)) return;
 
         //Do Disconnect Stuff
-
+        Debug.Log("Announce");
+        PlayerLeftRpc();
 
         //Remove from Dictionary
         dataStorage.Remove(clientID);
@@ -97,7 +100,7 @@ public class PlayerDataHandler : NetworkBehaviour
         PlayerData generatedData = new PlayerData(username);
         dataStorage.Add(clientID, generatedData);
 
-        NewPlayerJoinRpc(generatedData.ReturnName());
+        NewPlayerJoinRpc(clientID, generatedData.ReturnName());
     }
 
     [Rpc(SendTo.Server)]
@@ -105,21 +108,31 @@ public class PlayerDataHandler : NetworkBehaviour
     {
         if (dataStorage.Count == 0) return;
 
-        foreach (PlayerData data in dataStorage.Values)
+        foreach (ulong key in dataStorage.Keys)
         {
-            GenerateListRpc(data.ReturnName(), RpcTarget.Single(rpcParams.Receive.SenderClientId, RpcTargetUse.Temp));
+            GenerateListRpc(key, dataStorage[key].ReturnName(), RpcTarget.Single(rpcParams.Receive.SenderClientId, RpcTargetUse.Temp));
         }
     }
 
     [Rpc(SendTo.Everyone)]
-    private void NewPlayerJoinRpc(string data, RpcParams rpcParams = default)
+    private void PlayerLeftRpc(RpcParams rpcParams = default)
     {
-        AnnouncePlayerEntry.Invoke(data);
+        AnnouncePlayerLeave(rpcParams.Receive.SenderClientId);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void NewPlayerJoinRpc(ulong id,string data, RpcParams rpcParams = default)
+    {
+        var dataCopy = new PlayerData(data);
+
+        AnnouncePlayerEntry.Invoke(id, dataCopy);
     }
 
     [Rpc(SendTo.SpecifiedInParams)]
-    private void GenerateListRpc(string data, RpcParams rpcParams = default)
+    private void GenerateListRpc(ulong id, string data, RpcParams rpcParams = default)
     {
-        AnnouncePlayerEntry.Invoke(data);
+        var dataCopy = new PlayerData(data);
+
+        AnnouncePlayerEntry.Invoke(id, dataCopy);
     }
 }
